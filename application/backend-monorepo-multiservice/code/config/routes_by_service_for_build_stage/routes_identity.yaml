@@ -1,0 +1,11 @@
+schema_controller:
+  resource: ../src/JsonSchema/Controller/
+  type: attribute
+
+identity_user_controller:
+  resource: ../src/BoundedContext/Identity/User/Controller/
+  type: attribute
+
+identity_user_controller_for_projection_reaction:
+  resource: ../src/BoundedContext/Identity/User/ControllerForProjectionReaction/
+  type: attribute
