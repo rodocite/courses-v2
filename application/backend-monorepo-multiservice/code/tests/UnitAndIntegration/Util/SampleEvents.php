@@ -71,7 +71,7 @@ abstract class SampleEvents
             1,
             $eventId,
             $eventId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null),
             self::sampleEmail(),
             self::sampleVerificationCode(),
@@ -87,7 +87,7 @@ abstract class SampleEvents
         Id $causationId,
         Id $correlationId,
     ): PrimaryEmailVerificationCodeSent {
-        $eventId = Id::createNew();
+        $eventId = Id::createNewByHashing('Identity/User/PrimaryEmailVerificationSent:'.$causationId->id());
 
         return PrimaryEmailVerificationCodeSent::new(
             $eventId,
@@ -95,7 +95,7 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null),
             self::sampleVerificationCode(),
             self::sampleEmail(),
@@ -119,7 +119,7 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null),
             self::sampleVerificationCode(),
         );
@@ -139,10 +139,54 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null),
             self::secondSampleEmail(),
             self::secondSampleVerificationCode(),
+            self::sampleHashedPassword()
+        );
+    }
+
+    public static function primaryEmailChangeRequestedAgain(
+        Id $aggregateId,
+        int $aggregateVersion,
+        Id $causationId,
+        Id $correlationId
+    ): PrimaryEmailChangeRequested {
+        $eventId = Id::createNew();
+
+        return PrimaryEmailChangeRequested::new(
+            $eventId,
+            $aggregateId,
+            $aggregateVersion,
+            $causationId,
+            $correlationId,
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
+            self::sampleMetadata(null),
+            self::thirdSampleEmail(),
+            self::thirdSampleVerificationCode(),
+            self::sampleHashedPassword()
+        );
+    }
+
+    public static function primaryEmailChangeRequestedAgainAgain(
+        Id $aggregateId,
+        int $aggregateVersion,
+        Id $causationId,
+        Id $correlationId
+    ): PrimaryEmailChangeRequested {
+        $eventId = Id::createNew();
+
+        return PrimaryEmailChangeRequested::new(
+            $eventId,
+            $aggregateId,
+            $aggregateVersion,
+            $causationId,
+            $correlationId,
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
+            self::sampleMetadata(null),
+            self::fourthSampleEmail(),
+            self::fourthSampleVerificationCode(),
             self::sampleHashedPassword()
         );
     }
@@ -158,7 +202,7 @@ abstract class SampleEvents
             1,
             $eventId,
             $eventId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::anotherSampleMetadata(null),
             self::anotherSampleEmail(),
             self::anotherSampleVerificationCode(),
@@ -199,7 +243,7 @@ abstract class SampleEvents
             1,
             $eventId,
             $eventId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null),
             $asUser,
             null,
@@ -226,7 +270,7 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata($existingSessionToken),
             self::secondSampleIp(),
             $existingSessionToken,
@@ -249,7 +293,7 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata($existingSessionToken),
             self::thirdSampleIp(),
             $existingSessionToken,
@@ -279,7 +323,7 @@ abstract class SampleEvents
         ];
     }
 
-    private static function productDefined(): ProductDefined
+    public static function productDefined(): ProductDefined
     {
         $eventId = Id::createNew();
         $aggregateId = Id::createNew();
@@ -290,7 +334,7 @@ abstract class SampleEvents
             1,
             $eventId,
             $eventId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null),
             'Cool-Card',
             1_200,
@@ -303,7 +347,7 @@ abstract class SampleEvents
         );
     }
 
-    private static function productActivated(
+    public static function productActivated(
         Id $aggregateId,
         int $aggregateVersion,
         Id $causationId,
@@ -317,12 +361,12 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null)
         );
     }
 
-    private static function productDeactivated(
+    public static function productDeactivated(
         Id $aggregateId,
         int $aggregateVersion,
         Id $causationId,
@@ -336,7 +380,7 @@ abstract class SampleEvents
             $aggregateVersion,
             $causationId,
             $correlationId,
-            new \DateTimeImmutable('now'),
+            new \DateTimeImmutable('2024-02-02 03:00:32'),
             self::sampleMetadata(null)
         );
     }
@@ -385,6 +429,16 @@ abstract class SampleEvents
         return 'proof@galeas2.net';
     }
 
+    private static function thirdSampleEmail(): string
+    {
+        return 'proof123123@example-example.net';
+    }
+
+    private static function fourthSampleEmail(): string
+    {
+        return 'fourth@example-example.net';
+    }
+
     private static function anotherSampleEmail(): string
     {
         return 'anotherEmail@gmail.com';
@@ -423,6 +477,16 @@ abstract class SampleEvents
     private static function secondSampleVerificationCode(): string
     {
         return 'SecondVerificationCode';
+    }
+
+    private static function thirdSampleVerificationCode(): string
+    {
+        return 'ThirdVerificationCode';
+    }
+
+    private static function fourthSampleVerificationCode(): string
+    {
+        return 'FourthVerificationCode';
     }
 
     private static function anotherSampleVerificationCode(): string
